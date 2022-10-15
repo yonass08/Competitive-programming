@@ -1,9 +1,10 @@
-#User function Template for python3
+import math
 
+#User function Template for python3
 class Solution: 
     def select(self, arr, i):
         # code here
-        least = 100000000000
+        least = math.inf
         result = i
         for j in range(i, len(arr)):
             if arr[j] < least:
