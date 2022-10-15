@@ -1,11 +1,10 @@
 class Solution:
     def sortSentence(self, s: str) -> str:
-        list = s.split(' ')
-        for i in range(len(list)-1):
-            for j in range(len(list)-i-1):
-                if(int(list[j][-1]) > int(list[j+1][-1])):
-                    list[j], list[j+1] = [list[j+1], list[j]]
+        s_split = s.split(' ')
+        count = len(s_split)
+        result = [''] * count
         
-        for i in range(len(list)):
-            list[i] = list[i][:-1]
-        return " ".join(list)
+        for i in range(count):
+            result[int(s_split[i][-1]) - 1] = s_split[i][:-1]
+
+        return " ".join(result)
