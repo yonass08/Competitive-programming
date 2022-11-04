@@ -1,38 +1,45 @@
 class Solution:
     def threeSumMulti(self, arr: List[int], target: int) -> int:
         count = 0
-        arr.sort()
-        
-        for i in range(len(arr)-2):
-            summ = target - arr[i]
-            left = i + 1
-            right = len(arr)-1
+        mod = 1000000007
+        nums = [0] * 101
+
+        for num in arr:
+            nums[num] += 1
+
+        for i in range(101):
+            summ = target - i
+            left = i 
+            right = 100
             
-            while left < right:
-                if arr[left] + arr[right] < summ:
+            while left <= right:
+                if nums[left] == 0: 
                     left += 1
-                elif arr[left] + arr[right] > summ:
+                elif nums[right] == 0:
                     right -= 1
-                elif arr[left] == arr[right]:
-                    count += (right - left + 1) * (right - left) // 2
-                    count %= 1000000007
+                elif left + right > summ:
+                    right -= 1
+                elif left + right < summ:
+                    left += 1
+                elif i < left and left < right:
+                    count += nums[i] * nums[left] * nums[right]
+                    count %= mod
+                    left += 1
+                    right -= 1
+                elif i < left and left == right:
+                    count += (nums[i] * nums[left] * (nums[left]-1)) // 2
+                    count %= mod
                     break
+                elif i == left and left < right:
+                    count += (nums[i] * (nums[i]-1) * nums[right]) // 2
+                    count %= mod
+                    left += 1
+                    right -= 1
                 else:
-                    temp1, temp2 = 0, 0
-                    lnum, rnum = arr[left], arr[right]
-                    
-                    while arr[left] == lnum:
-                        temp1 += 1
-                        left += 1
-                    
-                    while arr[right] == rnum:
-                        temp2 += 1
-                        right -= 1
-                        
-                    count += temp1 * temp2
-                    count %= 1000000007
-                
-                    
+                    count += (nums[i] * (nums[i]-1) * (nums[i]-2)) // 6
+                    count %= mod
+                    break
+                              
         return count
                     
                     
